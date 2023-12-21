@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "Eventify Hub",
   description: "Create and manage your events by Eventify Hub ",
   icons: {
-    icon: "/assets/images/logo.svg",
+    icon: "/assets/images/logo.png",
   },
 };
 

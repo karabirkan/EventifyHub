@@ -13,7 +13,7 @@ const Header = () => {
         <Link href="/" className="w-36">
           <Image
             src="/assets/images/logo.svg"
-            width={76}
+            width={80}
             height={32}
             alt="Eventify Hub Logo"
           />

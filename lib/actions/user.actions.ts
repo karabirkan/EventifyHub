@@ -43,3 +43,16 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
     handleError(error);
   }
 }
+
+export async function deleteUser(clerkId: String) {
+  try {
+    await connectToDatabase();
+    const deletedUser = await User.findOneAndDelete({ clerkId });
+
+    if (!deletedUser) throw new Error("User delete failed");
+
+    return JSON.parse(JSON.stringify(deletedUser));
+  } catch (error) {
+    handleError(error);
+  }
+}

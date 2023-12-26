@@ -1,4 +1,4 @@
-("use server");
+"use server";
 import { connectToDatabase } from "../database";
 import Category from "../database/models/category.model";
 import { handleError } from "../utils";

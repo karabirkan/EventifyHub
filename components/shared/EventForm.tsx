@@ -20,6 +20,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { FileUploader } from "./FileUploader";
 import { useState } from "react";
 import Image from "next/image";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 type EventFormProps = {
   userId: string;
@@ -158,6 +160,10 @@ const EventForm = ({ userId, type }: EventFormProps) => {
                     <p className="ml-3 whitespace-nowrap text-grey-600">
                       Start Date:
                     </p>
+                    <DatePicker
+                      selected={field.value}
+                      onChange={(date: Date) => field.onChange(date)}
+                    />
                   </div>
                 </FormControl>
                 <FormMessage />

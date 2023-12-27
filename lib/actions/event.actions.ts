@@ -1,10 +1,16 @@
 "use server";
+
 import { connectToDatabase } from "../database";
 import Category from "../database/models/category.model";
 import Event from "../database/models/event.model";
 import User from "../database/models/user.model";
 import { handleError } from "../utils";
-import { CreateEventParams, GetAllEventsParams } from "./../../types/index";
+import {
+  CreateEventParams,
+  DeleteEventParams,
+  GetAllEventsParams,
+} from "./../../types/index";
+import { revalidatePath } from "next/cache";
 
 const populateEvent = async (query: any) => {
   return query
@@ -15,6 +21,8 @@ const populateEvent = async (query: any) => {
     })
     .populate({ path: "category", model: Category, select: "_id name" });
 };
+
+// Event Create
 
 export async function createEvent({ userId, event, path }: CreateEventParams) {
   try {
@@ -36,6 +44,8 @@ export async function createEvent({ userId, event, path }: CreateEventParams) {
   }
 }
 
+// Get event by id
+
 export const getEventById = async (eventId: string) => {
   try {
     await connectToDatabase();
@@ -49,6 +59,19 @@ export const getEventById = async (eventId: string) => {
     handleError(error);
   }
 };
+
+// Event delete
+export async function deleteEvent({ eventId, path }: DeleteEventParams) {
+  try {
+    await connectToDatabase();
+
+    const deletedEvent = await Event.findByIdAndDelete(eventId);
+
+    if (deletedEvent) revalidatePath(path);
+  } catch (error) {
+    handleError(error);
+  }
+}
 
 export const getAllEvents = async ({
   query,

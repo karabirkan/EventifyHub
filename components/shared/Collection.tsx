@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "./Card";
+import { IEvent } from "@/lib/database/models/event.model";
 
 type CollectionProps = {
   data: IEvent[];

@@ -7,16 +7,13 @@ import { handleError } from "../utils";
 import { CreateEventParams } from "./../../types/index";
 
 const populateEvent = async (query: any) => {
-  return query.populate({
-    path: "organizer",
-    model: User,
-    select: "_id firstName lastName",
-  });
-  return query.populate({
-    path: "category",
-    model: Category,
-    select: "_id name",
-  });
+  return query
+    .populate({
+      path: "organizer",
+      model: User,
+      select: "_id firstName lastName",
+    })
+    .populate({ path: "category", model: Category, select: "_id name" });
 };
 
 export async function createEvent({ userId, event, path }: CreateEventParams) {
@@ -43,7 +40,7 @@ export const getEventById = async (eventId: string) => {
   try {
     await connectToDatabase();
 
-    const event = await Event.findById(eventId);
+    const event = await populateEvent(Event.findById(eventId));
 
     if (!eventId) throw new Error("Event not found");
 

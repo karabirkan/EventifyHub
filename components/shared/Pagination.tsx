@@ -1,18 +1,23 @@
 "use client";
+
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { Button } from "../ui/button";
 import { formUrlQuery } from "@/lib/utils";
+
 type PaginationProps = {
   page: number | string;
   totalPages: number;
   urlParamName?: string;
 };
+
 const Pagination = ({ page, totalPages, urlParamName }: PaginationProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const onClick = (btnType: string) => {
     const pageValue = btnType === "next" ? Number(page) + 1 : Number(page) - 1;
+
     const newUrl = formUrlQuery({
       params: searchParams.toString(),
       key: urlParamName || "page",
@@ -21,6 +26,7 @@ const Pagination = ({ page, totalPages, urlParamName }: PaginationProps) => {
 
     router.push(newUrl, { scroll: false });
   };
+
   return (
     <div className="flex gap-2">
       <Button
@@ -37,7 +43,7 @@ const Pagination = ({ page, totalPages, urlParamName }: PaginationProps) => {
         variant="outline"
         className="w-28"
         onClick={() => onClick("next")}
-        disabled={Number(page) <= totalPages}
+        disabled={Number(page) >= totalPages}
       >
         Next
       </Button>
